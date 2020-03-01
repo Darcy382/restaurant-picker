@@ -1,0 +1,19 @@
+{% extends "restaurant.html" %}
+{% block view_photos %}
+{# Display photos in slide show #}
+
+    <div class="photos-container">
+        {% for url in photo_urls %}
+            <div class="food_photo">
+                <img src="{{ url }}">
+            </div>
+        {% endfor %}
+    </div>
+    <div class="photos-buttons">
+        <button onclick="Javascript:goToYelp({{ yelp_urls | safe }})">I want this!</button>
+        <button onclick="Javascript:showSimilar({{ categories | safe }})">I want something like this...</button>
+        <button onclick="Javascript:plusSlides(1)">Next</button>
+    </div>
+    <script type="text/javascript" src={{ url_for("static", filename="food_slides.js") }}></script>
+{# Allow the user to get more information about a place #}
+{% endblock %}

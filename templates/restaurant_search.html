@@ -1,0 +1,18 @@
+{% extends "restaurant.html" %}
+
+{% block search_bar %}
+    <div class="search-bar">
+        <form action="Javascript:search()">
+            <label><h2>What food are you craving?</h2></label>
+            <input type="text" id="search_value">
+            <button class="shutter-out" type="submit">Search!</button>
+        </form>
+    </div>
+    <div class="other_options">
+        <h2 style="display: inline-block">Or...</h2>
+        <button class="shutter-out" onclick="Javascript:surprise_me()" style="display: inline-block;
+                vertical-align: middle">Surprise me</button>
+        <button class="shutter-out" onclick="Javascript:search('/show_food?')" style="display: inline-block;
+                vertical-align: middle">Show me some food</button>
+    </div>
+{% endblock %}

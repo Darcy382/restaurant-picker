@@ -1,0 +1,268 @@
+body {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 300;
+    margin: 0;
+    background: #ff0d7b;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 900;
+}
+
+/* Loading screen */
+.loader {
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loader > img {
+    width:300px
+}
+.loader.hidden {
+    animation: fadeOut 1s;
+    animation-fill-mode: forwards;
+}
+@keyframes fadeOut {
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.wrapper {
+    //background: #F7F9FB;
+    background: #ff0d7b;
+    margin-top: 0;
+    display: grid;
+    grid-template-columns: 5% 45% 45% 5%;
+    grid-auto-rows: minmax(100px, auto);
+    column-gap: 5px;
+    color: #ffffff;
+}
+
+.header {
+    padding: 40px;
+    background: #ff0d7b;
+    border-bottom: 5px solid #ffffff;
+    font-size: 40px;
+    color: #F7F9FB;
+    text-align: center;
+}
+
+.search-bar {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    grid-column: 1/5;
+    padding-top: 30px;
+}
+.search-bar input{
+    width: 350px;
+    border: 1px solid lightskyblue;
+    border-radius: 6px;
+    padding: 10px;
+    margin: 2%;
+    background: #fff;
+    display: inline-block;
+    font-size: 20px;
+}
+.search-bar label {
+    display: inline-block;
+}
+
+.other_options {
+    grid-column: 1/5;
+    grid-row: 2;
+    text-align: center;
+    vertical-align: middle;
+    border-top: white;
+}
+.other_options h2 {
+    font-size: 30px;
+}
+
+.results {
+    grid-column: 2;
+    grid-row: 3;
+}
+.results h3 {
+    color: #31708E;
+    font-size: 25px;
+}
+.results p {
+    font-size: 20px;
+    color: #48535c;
+    padding: 4px;
+}
+
+#yelp-logo {
+    display: inline-block;
+    max-width: 25%;
+    float: right;
+}
+
+.map {
+    grid-column: 3;
+    grid-row: 3;
+    text-align: center;
+}
+.map-sticky {
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 15px;
+}
+#map {
+    height: 400px;
+    max-width: 100%;
+}
+
+.block {
+    background: #ffffff;
+    display: inline-block;
+    width: 70%;
+    padding: 30px 10px;
+    margin: 2%;
+    text-align: center;
+    box-shadow: 0 0 15px 1px rgba(255,211,211,0.52)
+}
+.block img {
+    max-width: 50%;
+}
+.block:hover {
+    box-shadow: 0 0 10px 2px rgba(255,211,211,2)
+}
+
+button {
+    font-size: 20px;
+    border: 0;
+    border-radius: 12px;
+    outline: none !important;
+    background: #ffffff;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #48535c;
+    margin: 2%;
+}
+/* Shutter out Horizontal from https://github.com/IanLunn/Hover/blob/master/css/hover.css */
+.shutter-out {
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    position: relative;
+    background: #ffffff;
+    -webkit-transition-property: color;
+    transition-property: color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+.shutter-out:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: black;
+    border-radius: 12px;
+    -webkit-transform: scaleX(0);
+    transform: scaleX(0);
+    -webkit-transform-origin: 50%;
+    transform-origin: 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+}
+.shutter-out:hover, .shutter-out:focus, .shutter-out:active {
+    color: white;
+}
+.shutter-out:hover:before, .shutter-out:focus:before, .shutter-out:active:before {
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+}
+
+/* Slide show styling for viewing food pictures */
+.photos-container {
+    grid-column: 2/4;
+    grid-row: 1;
+    position: relative;
+    margin: auto;
+}
+.photos-container img {
+    max-height: 500px;
+}
+.photos-buttons {
+    text-align: center;
+    grid-column: 2/4;
+    grid-row: 2;
+}
+.photos-buttons button {
+    padding: 18px;
+}
+.photos-buttons button:hover {
+    border: 2px solid black;
+    padding: 16px;
+}
+.food_photo {
+    display: None;
+}
+.next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    right: 0;
+}
+.next:hover {
+    background-color: rgba(0, 0, 0, 0.8)
+}
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+@-webkit-keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+
+@media only screen and (max-device-width: 900px) {
+    .results {
+        grid-column: 1/5;
+        grid-row: 4;
+    }
+    .map {
+        grid-column: 1/5;
+        grid-row: 3;
+    }
+    .map-sticky {
+        position: static;
+    }
+
+}
