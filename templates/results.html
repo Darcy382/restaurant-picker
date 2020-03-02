@@ -1,4 +1,4 @@
-{% extends "restaurant_search.html" %}
+{% extends "search.html" %}
 
 {% block map %}
     <div class="map">
@@ -41,13 +41,6 @@
                 var center = new google.maps.LatLng(coordinates['latitude'], coordinates['longitude']);
                 var map = document.getElementById("map");
                 window.map.panTo(center);
-
-                /*Function to change the marker logo when hover over it
-                markers[markerNum].setIcon({
-                    url:'{{ url_for("static", filename="images/marker.png") }}',
-                    scaledSize: new google.maps.Size(64, 64),
-                });
-               // markers[markerNum].setZIndex(1);*/
             }
         </script>  <!-- Google Maps JS API -->
         <script async defer
@@ -64,13 +57,13 @@
         {% if no_results == False %}
             <h2>Restaurants near you:</h2>
             {% for biz in results["businesses"] %}
-                <a href={{ biz["url"]}}>
+                <a target="_blank" href={{ biz["url"]}}>
                 <div onmouseover="JavaScript:imageHover({{ biz["coordinates"]|safe }}, {{ loop.index }})"
-                     class="block">  <!-- Centers the maps on the bussiness that is being hovered over -->
+                     class="block">  <!-- Centers the maps on the business that is being hovered over -->
                     <h3><b>{{ loop.index }}) {{ biz["name"] }}</b></h3>
                     <img src={{ biz["image_url"] }}>  <!-- Image -->
                     <p>({{ biz['phone'][2:5] }}) {{ biz['phone'][5:8] }}-{{ biz['phone'][8:] }}</p>  <!-- Phone # -->
-                    <div id="rating-stars">
+                    <div id="rating-stars"> <!-- Rating stars -->
                         {% set rating = biz['rating'] %}
                         {% if rating == 5 %}
                             <img src={{ url_for("static", filename="images/yelp_stars/regular_5@3x.png") }}>
@@ -93,7 +86,7 @@
                         {% else %}
                             <img src={{ url_for("static", filename="images/yelp_stars/regular_0@3x.png") }}>
                         {% endif %}
-                    </div> <!-- Rating stars -->
+                    </div>
                     <p id="category">{{ biz['categories'][0]['title'] }}</p>
                     <img id="yelp-logo" src={{ url_for("static", filename="images/yelp_logo.png") }}>
                 </div>
