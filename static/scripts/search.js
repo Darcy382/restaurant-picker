@@ -1,9 +1,12 @@
-// Displays a loading screen while the webpage is loading
 window.addEventListener("load", function () {
         const loader = document.querySelector(".loader");
         loader.className += " hidden"; // class "loader hidden
     });
 
+function displayLoader() {
+    const loader = document.querySelector(".loader");
+    loader.className += " hidden"; // class "loader hidden
+}
 
 // Search() function taken from w3schools.com, sends the users location to sendData
 function search(search_url="/search?", search_value=document.getElementById('search_value').value) {

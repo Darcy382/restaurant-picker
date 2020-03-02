@@ -5,8 +5,8 @@ app = Flask(__name__)
 
 
 @app.route('/')  # Restaurant main page
-def restaurant():
-    return render_template('restaurant_search.html', results=search)
+def index():
+    return render_template('search.html', results=search)
 
 
 @app.route("/search")  # Restaurant search
@@ -27,7 +27,7 @@ def search():
 
 @app.route('/results')  # Returns restaurant search results
 def search_results(results, location, biz_locations=None, no_results=False, search_value=""):
-    return render_template("restaurant_results.html", search_value=search_value, results=results, location=location,
+    return render_template("results.html", search_value=search_value, results=results, location=location,
                            biz_locations=biz_locations, no_results=no_results)
 
 
@@ -38,7 +38,7 @@ def show_food():
     photo_urls = [biz["image_url"] for biz in results["businesses"]]
     yelp_urls = [biz["url"] for biz in results["businesses"]]
     categories = [biz["categories"][0]['title'] for biz in results["businesses"]]
-    return render_template('restaurant_view_food.html', categories= categories,
+    return render_template('view_food.html', categories= categories,
                            results=results, photo_urls=photo_urls, yelp_urls=yelp_urls)
 
 if __name__ == '__main__':

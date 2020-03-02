@@ -18,16 +18,12 @@ function showSlides(n) {
 
 // Redirects the browser to the yelp link for the image being viewed
 function goToYelp(biz_list) {
-    const loader = document.querySelector(".loader");  // Displays loading screen
-    loader.className = "loader"; // class "loader hidden
     let url = biz_list[slideIndex - 1];
-    window.location.replace(url);
+    window.open(url, "_blank");
 }
 
 // Preforms a search function for the type of food being viewed
 function showSimilar(categories) {
-    console.log(categories);
-    const loader = document.querySelector(".loader");  // Displays loading screen
-    loader.className = "loader"; // class "loader hidden
+    displayLoader();
     search("/search?", categories[slideIndex - 1]);
 }

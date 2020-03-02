@@ -1,4 +1,4 @@
-{% extends "restaurant.html" %}
+{% extends "index.html" %}
 {% block view_photos %}
 {# Display photos in slide show #}
 
@@ -10,10 +10,11 @@
         {% endfor %}
     </div>
     <div class="photos-buttons">
+        <button onclick="window.location.href='/'">Back to search</button>
         <button onclick="Javascript:goToYelp({{ yelp_urls | safe }})">I want this!</button>
         <button onclick="Javascript:showSimilar({{ categories | safe }})">I want something like this...</button>
         <button onclick="Javascript:plusSlides(1)">Next</button>
     </div>
-    <script type="text/javascript" src={{ url_for("static", filename="food_slides.js") }}></script>
+    <script type="text/javascript" src={{ url_for("static", filename="scripts/food_slides.js") }}></script>
 {# Allow the user to get more information about a place #}
 {% endblock %}
