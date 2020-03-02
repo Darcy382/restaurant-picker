@@ -44,7 +44,7 @@
             }
         </script>  <!-- Google Maps JS API -->
         <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=APIKEY=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key | safe }}&callback=initMap">
         </script>
     </div>
 {%  endblock %}

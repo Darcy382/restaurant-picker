@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from restaurant import search_business, get_biz_locations
+from api_keys import get_google_api
 
 app = Flask(__name__)
 
@@ -28,7 +29,7 @@ def search():
 @app.route('/results')  # Returns restaurant search results
 def search_results(results, location, biz_locations=None, no_results=False, search_value=""):
     return render_template("results.html", search_value=search_value, results=results, location=location,
-                           biz_locations=biz_locations, no_results=no_results)
+                           biz_locations=biz_locations, no_results=no_results, google_api_key=get_google_api())
 
 
 @app.route('/show_food')
