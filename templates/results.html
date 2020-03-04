@@ -6,45 +6,15 @@
             <h2>Locations</h2>
             <div id="map"></div>
         </div>
+        <!-- Google Maps JS API -->
+        <script type="text/javascript" src="{{ url_for("static", filename="scripts/map.js") }}"></script>
         <script>
-            window.map = undefined;
-            var markers = [];
-            function initMap() {
-                // Map options
-                var options = {
-                    zoom: 14,
-                    center: {lat: {{ location['lat'] }}, lng: {{ location['long'] }}},
-                };
-
-                // New map
-                window.map = new google.maps.Map(document.getElementById('map'), options);
-
-                // Add marker
-                setMarker(map);
+            function loadMap() {
+                initMap({{ biz_locations | safe }}, {{ location['lat'] }}, {{ location['long'] }})
             }
-
-            var locations = {{ biz_locations|safe }};
-            function setMarker(map) {
-                for (var i = 0; i < locations.length; i++) {
-                    var restaurant = locations[i];
-                    var marker = new google.maps.Marker({
-                        position: {lat: restaurant[1], lng: restaurant[2]},
-                        map: map,
-                        title: restaurant[0],
-                        label: (i + 1).toString(),
-                    });
-                    markers.push(marker)
-                }
-            }
-
-            function imageHover(coordinates, markerNum) {
-                var center = new google.maps.LatLng(coordinates['latitude'], coordinates['longitude']);
-                var map = document.getElementById("map");
-                window.map.panTo(center);
-            }
-        </script>  <!-- Google Maps JS API -->
+        </script>
         <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key | safe }}&callback=initMap">
+            src="https://maps.googleapis.com/maps/api/js?key={{ google_api_key | safe }}&callback=loadMap">
         </script>
     </div>
 {%  endblock %}
