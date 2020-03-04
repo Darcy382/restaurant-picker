@@ -1,3 +1,7 @@
+/*
+* Commenting left off here
+* */
+
 window.addEventListener("load", function () {
         const loader = document.querySelector(".loader");
         loader.className += " hidden"; // class "loader hidden

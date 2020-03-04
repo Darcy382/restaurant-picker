@@ -28,7 +28,7 @@
             <h2>Restaurants near you:</h2>
             {% for biz in results["businesses"] %}
                 <a target="_blank" href={{ biz["url"]}}>
-                <div onmouseover="JavaScript:imageHover({{ biz["coordinates"]|safe }}, {{ loop.index }})"
+                <div onmouseover="JavaScript:imageHover({{ biz["coordinates"]|safe }})"
                      class="block">  <!-- Centers the maps on the business that is being hovered over -->
                     <h3><b>{{ loop.index }}) {{ biz["name"] }}</b></h3>
                     <img src={{ biz["image_url"] }}>  <!-- Image -->
