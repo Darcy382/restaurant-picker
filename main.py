@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from restaurant import search_business, get_biz_locations
+from yelp_api import search_business, get_biz_locations
 from api_keys import get_google_api
 
 app = Flask(__name__)

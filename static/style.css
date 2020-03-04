@@ -43,7 +43,6 @@ h1, h2, h3, h4, h5, h6 {
     display: grid;
     grid-template-columns: 5% 45% 45% 5%;
     grid-auto-rows: minmax(100px, auto);
-    column-gap: 5px;
     color: #ffffff;
 }
 
