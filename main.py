@@ -19,6 +19,7 @@ def search():
     }
     # Gets search results from yelp's api
     results = search_business(search_args['search_value'], search_args['lat'], search_args['long'])
+    # Calls the search_results function to render the results page
     if len(results['businesses']) == 0:
         return search_results(results, location, no_results=True)
     else:
@@ -26,12 +27,12 @@ def search():
         return search_results(results, location, biz_locations, search_value=search_args['search_value'])
 
 
-@app.route('/results')  # Returns restaurant search results
+@app.route('/results')  # Returns search results page
 def search_results(results, location, biz_locations=None, no_results=False, search_value=""):
     return render_template("results.html", search_value=search_value, results=results, location=location,
                            biz_locations=biz_locations, no_results=no_results, google_api_key=get_google_api())
 
-
+# LEFT OFF COMMENTING HERE
 @app.route('/show_food')
 def show_food():
     search_args = request.args
@@ -41,6 +42,7 @@ def show_food():
     categories = [biz["categories"][0]['title'] for biz in results["businesses"]]
     return render_template('view_food.html', categories= categories,
                            results=results, photo_urls=photo_urls, yelp_urls=yelp_urls)
+
 
 if __name__ == '__main__':
     app.run()

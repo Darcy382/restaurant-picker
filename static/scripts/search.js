@@ -5,7 +5,7 @@
 // Displays the loading gif whenever the website is loading
 window.addEventListener("load", function () {
         const loader = document.querySelector(".loader");
-        loader.className += " hidden"; // class "loader hidden
+        loader.className += " hidden";
     });
 
 /*
@@ -14,8 +14,9 @@ window.addEventListener("load", function () {
 * Function will get the users location, then call upon the sendData function if successful
 * */
 function search(search_url="/search?", search_value=document.getElementById('search_value').value) {
-    const loader = document.querySelector(".loader");  // Displays loading screen
-    loader.className = "loader"; // class "loader hidden
+    // Displays loading screen
+    const loader = document.querySelector(".loader");
+    loader.className = "loader";
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             sendData(position, search_url, search_value);
