@@ -1,6 +1,4 @@
-/*
-* search.js holds the functions responsible for preforming a food search, the "surprise me" button, and the loading gif
-* */
+//search.js holds the functions responsible for preforming a food search, the "surprise me" button, and the loading gif
 
 // Displays the loading gif whenever the website is loading
 window.addEventListener("load", function () {
@@ -8,11 +6,8 @@ window.addEventListener("load", function () {
         loader.className += " hidden";
     });
 
-/*
-* search() function modeled from w3schools.com: https://www.w3schools.com/html/html5_geolocation.asp
-*
-* Function will get the users location, then call upon the sendData function if successful
-* */
+/* search() function modeled from w3schools.com: https://www.w3schools.com/html/html5_geolocation.asp
+* Function will get the users location, then call upon the sendData function if successful */
 function search(search_url="/search?", search_value=document.getElementById('search_value').value) {
     // Displays loading screen
     const loader = document.querySelector(".loader");
@@ -20,25 +15,35 @@ function search(search_url="/search?", search_value=document.getElementById('sea
     // Checks for location cookies
     let lat = getCookie("lat");
     let long = getCookie("long");
-    // Cookies found
+    // if Cookies found
     if (lat !== "" && long !== "" ) {
         sendData({'lat': lat, 'long': long}, search_url, search_value, true)
     }
-    // Cookies not found
+    // if Cookies not found
     else {
         // Getting location
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 sendData(position, search_url, search_value);
-            }, location_error);
+            }, function() {
+                location_error(search_url, search_value)
+            });
         } else {
-            alert("Geolocation is not supported by this browser.");
+            location_error(search_url, search_value);
         }
     }
 }
 
-function location_error() {
-    alert("Geolocation could not be determined!")
+function location_error(search_url, search_value) {
+    let zip = prompt("Geolocation could not be determined\n\nPlease enter you zip code:");
+    let xhr = $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + zip + '&key=' + config['GOOGLE_API_KEY']);
+    xhr.done(function(data) {
+        position = {
+            'lat': data.results[0].geometry.location.lat,
+            'long': data.results[0].geometry.location.lng,
+        };
+        sendData(position, search_url, search_value, true)
+    })
 }
 
 /*
@@ -55,9 +60,10 @@ function sendData(position, url, search_value, location_cookie=false) {
         var long = position['long'];
     }
     // Setting a cookie with location
-    let inTwentyMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
+    let inTwentyMinutes = new Date(new Date().getTime() + 15 * 60 * 1000); // expires in 15 minutes
     document.cookie="lat=" + lat.toString() + "; expires=" + inTwentyMinutes.toUTCString();
     document.cookie="long=" + long.toString() + "; expires=" + inTwentyMinutes.toUTCString();
+    // Sending the get request
     let data = {"lat": lat, "long": long, "search_value": search_value};
     let queryString = $.param(data);
     window.location.replace(url + queryString);
@@ -80,13 +86,13 @@ function getCookie(cname) {
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
     for(var i = 0; i <ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) === ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) === 0) {
-      return c.substring(name.length, c.length);
-    }
+        var c = ca[i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+        }
     }
     return "";
 }

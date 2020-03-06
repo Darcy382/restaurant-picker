@@ -32,6 +32,7 @@ function goToYelp(biz_list) {
 
 // "Show me food like this" button - Preforms a search function for the type of food being viewed
 function showSimilar(categories) {
-    displayLoader();
+    const loader = document.querySelector(".loader");
+    loader.className += " hidden";
     search("/search?", categories[slideIndex - 1]);
 }
