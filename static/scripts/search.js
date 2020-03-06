@@ -17,22 +17,47 @@ function search(search_url="/search?", search_value=document.getElementById('sea
     // Displays loading screen
     const loader = document.querySelector(".loader");
     loader.className = "loader";
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            sendData(position, search_url, search_value);
-        });
-    } else {
-        alert("Geolocation is not supported by this browser.");
+    // Checks for location cookies
+    let lat = getCookie("lat");
+    let long = getCookie("long");
+    // Cookies found
+    if (lat !== "" && long !== "" ) {
+        sendData({'lat': lat, 'long': long}, search_url, search_value, true)
     }
+    // Cookies not found
+    else {
+        // Getting location
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                sendData(position, search_url, search_value);
+            }, location_error);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+}
+
+function location_error() {
+    alert("Geolocation could not be determined!")
 }
 
 /*
 * Called by the search() function, sendData() will send a GET request with the users's search term, location, and
 * desired url.
 * */
-function sendData(position, url, search_value) {
-    let lat = position.coords.latitude; //Gets users location
-    let long = position.coords.longitude;
+function sendData(position, url, search_value, location_cookie=false) {
+    if (location_cookie === false) {
+        var lat = position.coords.latitude; //Gets users location
+        var long = position.coords.longitude;
+    }
+    else {
+        var lat = position['lat'];
+        var long = position['long'];
+    }
+    // Setting a cookie with location
+    let inTwentyMinutes = new Date(new Date().getTime() + 15 * 60 * 1000);
+    document.cookie="lat=" + lat.toString() + "; expires=" + inTwentyMinutes.toUTCString();
+    document.cookie="long=" + long.toString() + "; expires=" + inTwentyMinutes.toUTCString();
     let data = {"lat": lat, "long": long, "search_value": search_value};
     let queryString = $.param(data);
     window.location.replace(url + queryString);
@@ -47,4 +72,21 @@ function surprise_me() {
     let choice = food_types[Math.floor(Math.random() * food_types.length)];
     document.getElementById('search_value').value = choice;
     search();
+}
+
+// Function from https://www.w3schools.com/js/js_cookies.asp
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+    }
+    return "";
 }

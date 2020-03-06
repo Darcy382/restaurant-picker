@@ -186,7 +186,7 @@ button {
     transition-timing-function: ease-out;
 }
 .shutter-out:hover, .shutter-out:focus, .shutter-out:active {
-    color: white;
+    color: black;
 }
 .shutter-out:hover:before, .shutter-out:focus:before, .shutter-out:active:before {
     -webkit-transform: scaleX(1);
