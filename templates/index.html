@@ -6,17 +6,18 @@
     <link rel="stylesheet" href={{ url_for("static", filename="style.css") }}>
     <meta name="viewport" content="initial-scale=1.0">
     <script type="text/javascript" src={{ url_for("static", filename="scripts/jquery-3.4.1.js") }}></script> <!-- JQuery' -->
-    <script type="text/javascript" src={{ url_for("static", filename="scripts/search.js") }}></script> <!-- loading script and preform a search -->
+    {# Script holds functions to preform a search and to dipslay the loading gif #}
+    <script type="text/javascript" src={{ url_for("static", filename="scripts/search.js") }}></script>
     <link href="https://fonts.googleapis.com/css?family=Quicksand:300,500" rel="stylesheet"> <!-- Google Fonts -->
 </head>
 <body>
-<div class="loader">
+<div class="loader"> {# Loading gif #}
     <img src="{{ url_for("static", filename="images/loading.gif") }}" alt="loading...">
 </div>
 <div class="header">
     <h1>Restaurant Picking, Simplified</h1>
 </div>
-<div class="wrapper">
+<div class="wrapper"> {# Wrapper for the css grid layout of the site #}
     {% block search_bar %}
     {% endblock %}
     {% block surprise_me %}

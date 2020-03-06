@@ -1,12 +1,12 @@
 {% extends "search.html" %}
 
+{# The map div houses the interactive map that displays bussiness (Powered by Google's Javascript Maps API #}
 {% block map %}
     <div class="map">
         <div class="map-sticky">
             <h2>Locations</h2>
             <div id="map"></div>
         </div>
-        <!-- Google Maps JS API -->
         <script type="text/javascript" src="{{ url_for("static", filename="scripts/map.js") }}"></script>
         <script>
             function loadMap() {
@@ -19,46 +19,31 @@
     </div>
 {%  endblock %}
 
+{# search_results block houses the bussiness blocks displayed on the left side #}
 {% block search_results %}
+    {# Sets the search bar to the value searched  #}
     <script>
         document.getElementById('search_value').value = "{{ search_value|safe }}";
     </script>
     <div class="results">
         {% if no_results == False %}
             <h2>Restaurants near you:</h2>
-            {% for biz in results["businesses"] %}
+            {# Loops through each businesses and creates a block with biz details for each one #}
+            {% for biz in businesses %}
                 <a target="_blank" href={{ biz["url"]}}>
-                <div onmouseover="JavaScript:imageHover({{ biz["coordinates"]|safe }})"
-                     class="block">  <!-- Centers the maps on the business that is being hovered over -->
+                {# Centers the maps on the business that is being hovered over #}
+                <div onmouseover="JavaScript:imageHover({{ biz["coordinates"]|safe }})" class="block">
                     <h3><b>{{ loop.index }}) {{ biz["name"] }}</b></h3>
-                    <img src={{ biz["image_url"] }}>  <!-- Image -->
-                    <p>({{ biz['phone'][2:5] }}) {{ biz['phone'][5:8] }}-{{ biz['phone'][8:] }}</p>  <!-- Phone # -->
-                    <div id="rating-stars"> <!-- Rating stars -->
-                        {% set rating = biz['rating'] %}
-                        {% if rating == 5 %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_5@3x.png") }}>
-                        {% elif rating == 4.5 %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_4_half@3x.png") }}>
-                         {% elif rating == 4 %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_4@3x.png") }}>
-                        {% elif rating == 3.5 %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_3_half@3x.png") }}>
-                        {% elif rating == 3 %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_3@3x.png") }}>
-                        {% elif rating == 2.5 %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_2_half@3x.png") }}>
-                        {% elif rating == 2 %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_2@3x.png") }}>
-                        {% elif rating == 1.5 %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_1_half@3x.png") }}>
-                        {% elif rating == 1 %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_1@3x.png") }}>
-                        {% else %}
-                            <img src={{ url_for("static", filename="images/yelp_stars/regular_0@3x.png") }}>
-                        {% endif %}
+                    <img src={{ biz["image_url"] }}>  {# Bussiness Image #}
+                    <p>({{ biz['phone'][2:5] }}) {{ biz['phone'][5:8] }}-{{ biz['phone'][8:] }}</p>  {# Phone # #}
+                    <div id="rating-stars"> {# Rating stars #}
+                        {% set rating = biz['rating'] | string %}
+                        {% set base_image_url = url_for("static", filename="images/yelp_stars") %}
+                        {% set image_url = base_image_url +  "/star_" + rating + ".png" %}
+                        <img src="{{ image_url }}">
                     </div>
-                    <p id="category">{{ biz['categories'][0]['title'] }}</p>
-                    <img id="yelp-logo" src={{ url_for("static", filename="images/yelp_logo.png") }}>
+                    <p id="category">{{ biz['categories'][0]['title'] }}</p> {# Category #}
+                    <img id="yelp-logo" src={{ url_for("static", filename="images/yelp_logo.png") }}> {# Yelp logo #}
                 </div>
                 </a>
             {% endfor %}
