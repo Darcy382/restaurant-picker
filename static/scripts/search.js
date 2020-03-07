@@ -34,6 +34,7 @@ function search(search_url="/search?", search_value=document.getElementById('sea
     }
 }
 
+// If Geolocation cannot be determined
 function location_error(search_url, search_value) {
     let zip = parseInt(prompt("Location could not be determined\n\nPlease enter you zip code:"));
     if (isNaN(zip)) {
@@ -44,7 +45,7 @@ function location_error(search_url, search_value) {
         if (data.results[0] === undefined) {
             location_error(search_url, search_value)
         }
-        position = {
+        var position = {
         'lat': data.results[0].geometry.location.lat,
         'long': data.results[0].geometry.location.lng,
         };
@@ -77,10 +78,8 @@ function sendData(position, url, search_value, geolocation_object=false) {
     window.location.replace(url + queryString);
 }
 
-/*
-* called by the "Surprise me" button, function picks a random restaurant type from the list below and calls the
-* search function with that value.
-*/
+/* called by the "Surprise Me" button, function picks a random restaurant type from the list below and calls the
+* search function with that value. */
 function surprise_me() {
     let food_types = ["Mexican", "Chinese", "Seafood", "Asian", "Italian", "Fast Food", "Diner", "Steakhouse"];
     let choice = food_types[Math.floor(Math.random() * food_types.length)];
