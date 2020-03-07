@@ -1,2 +1,6 @@
 # Project exclude paths
 /venv/
+/.gcloudignore
+/api_keys.py
+/static/scripts/config.js
+/.idea

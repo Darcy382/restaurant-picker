@@ -36,13 +36,13 @@
                     <h3><b>{{ loop.index }}) {{ biz["name"] }}</b></h3>
                     <img src={{ biz["image_url"] }}>  {# Bussiness Image #}
                     <p>({{ biz['phone'][2:5] }}) {{ biz['phone'][5:8] }}-{{ biz['phone'][8:] }}</p>  {# Phone # #}
-                    <div id="rating-stars"> {# Rating stars #}
+                    <div class="rating-stars"> {# Rating stars #}
                         {% set rating = biz['rating'] | string %}
                         {% set base_image_url = url_for("static", filename="images/yelp_stars") %}
                         {% set image_url = base_image_url +  "/star_" + rating + ".png" %}
                         <img src="{{ image_url }}">
                     </div>
-                    <p id="category">{{ biz['categories'][0]['title'] }}</p> {# Category #}
+                    <p id="category">{{ biz['categories'][0]['title'] }}    {{ biz['price'] }}</p> {# Category #}
                     <img id="yelp-logo" src={{ url_for("static", filename="images/yelp_logo.png") }}> {# Yelp logo #}
                 </div>
                 </a>
