@@ -4,10 +4,18 @@
     <div class="photos-container">
         {% for url in photo_urls %}
             <div class="food_photo">
-                <img src="{{ url }}">
+                 <img src="{{ url }}">
             </div>
         {% endfor %}
     </div>
+    <style>
+        .body, html {
+            overflow-y: hidden;
+        }
+        .header {
+            display: none;
+        }
+    </style>
     <div class="photos-buttons">
         <button onclick="window.location.href='/'">Back to search</button>
         <button onclick="Javascript:goToYelp({{ yelp_urls | safe }})">I want this!</button>  {# Goes to yelp link #}

@@ -186,7 +186,7 @@ button {
     transition-timing-function: ease-out;
 }
 .shutter-out:hover, .shutter-out:focus, .shutter-out:active {
-    color: black;
+    color: white;
 }
 .shutter-out:hover:before, .shutter-out:focus:before, .shutter-out:active:before {
     -webkit-transform: scaleX(1);
@@ -197,13 +197,18 @@ button {
 .photos-container {
     grid-column: 2/4;
     grid-row: 1;
+    text-align: center;
     position: relative;
-    margin: auto;
+    background: white;
+    margin: 4vh auto auto;
+    padding: 5vh 5vh;
+    box-shadow: 0 0 15px 1px rgba(255,211,211,0.52)
 }
 .photos-container img {
-    max-height: 500px;
+    height:70vh;
 }
 .photos-buttons {
+    height: 20vh;
     text-align: center;
     grid-column: 2/4;
     grid-row: 2;

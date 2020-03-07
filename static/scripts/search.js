@@ -17,14 +17,14 @@ function search(search_url="/search?", search_value=document.getElementById('sea
     let long = getCookie("long");
     // if Cookies found
     if (lat !== "" && long !== "" ) {
-        sendData({'lat': lat, 'long': long}, search_url, search_value, true)
+        sendData({'lat': lat, 'long': long}, search_url, search_value)
     }
     // if Cookies not found
     else {
         // Getting location
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
-                sendData(position, search_url, search_value);
+                sendData(position, search_url, search_value,true)
             }, function() {
                 location_error(search_url, search_value)
             });
@@ -35,14 +35,20 @@ function search(search_url="/search?", search_value=document.getElementById('sea
 }
 
 function location_error(search_url, search_value) {
-    let zip = prompt("Geolocation could not be determined\n\nPlease enter you zip code:");
+    let zip = parseInt(prompt("Location could not be determined\n\nPlease enter you zip code:"));
+    if (isNaN(zip)) {
+        location_error(search_url, search_value);
+    }
     let xhr = $.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + zip + '&key=' + config['GOOGLE_API_KEY']);
     xhr.done(function(data) {
+        if (data.results[0] === undefined) {
+            location_error(search_url, search_value)
+        }
         position = {
-            'lat': data.results[0].geometry.location.lat,
-            'long': data.results[0].geometry.location.lng,
+        'lat': data.results[0].geometry.location.lat,
+        'long': data.results[0].geometry.location.lng,
         };
-        sendData(position, search_url, search_value, true)
+        sendData(position, search_url, search_value)
     })
 }
 
@@ -50,14 +56,16 @@ function location_error(search_url, search_value) {
 * Called by the search() function, sendData() will send a GET request with the users's search term, location, and
 * desired url.
 * */
-function sendData(position, url, search_value, location_cookie=false) {
-    if (location_cookie === false) {
-        var lat = position.coords.latitude; //Gets users location
-        var long = position.coords.longitude;
+function sendData(position, url, search_value, geolocation_object=false) {
+    var lat;
+    var long;
+    if (geolocation_object === true) {
+        lat = position.coords.latitude; //Gets users location
+        long = position.coords.longitude;
     }
     else {
-        var lat = position['lat'];
-        var long = position['long'];
+        lat = position['lat'];
+        long = position['long'];
     }
     // Setting a cookie with location
     let inTwentyMinutes = new Date(new Date().getTime() + 15 * 60 * 1000); // expires in 15 minutes
