@@ -34,7 +34,7 @@ function search(search_url="/search?", search_value=document.getElementById('sea
     }
 }
 
-// If Geolocation cannot be determined
+// If Geolocation cannot be determined, the user is prompted for their zip code, and Google's Geocode API is used for coordinates
 function location_error(search_url, search_value) {
     let zip = parseInt(prompt("Location could not be determined\n\nPlease enter you zip code:"));
     if (isNaN(zip)) {
@@ -53,10 +53,8 @@ function location_error(search_url, search_value) {
     })
 }
 
-/*
-* Called by the search() function, sendData() will send a GET request with the users's search term, location, and
-* desired url.
-* */
+/* Called by the search() function, sendData() will send a GET request with the users's search term, location, and
+* desired url. */
 function sendData(position, url, search_value, geolocation_object=false) {
     var lat;
     var long;
